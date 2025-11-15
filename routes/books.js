@@ -1,4 +1,5 @@
 // Create a new router
+const { name } = require("ejs");
 const express = require("express")
 const router = express.Router()
 
@@ -11,15 +12,35 @@ router.get('/search-result', function (req, res, next) {
     res.send("You searched for: " + req.query.keyword)
 });
 
+
 router.get('/list', function(req, res, next) {
-    let sqlquery = "SELECT * FROM books"; // query database to get all the books
+    let sqlQuery = ` SELECT id, price, name FROM books`; // query database to get all the books
     // execute sql query
-    db.query(sqlquery, (err, result) => {
+    db.query(sqlQuery, (err, result) => {
         if (err) {
             next(err)
-    }
-    res.send(result)
+        }
+        res.render("list.ejs", {availableBooks: result})
     });
+});
+
+router.get('/addbook',function(req, res, next){
+    res.render("addbook.ejs")
+});
+
+router.post('/bookadded', function (req, res, next) {
+    // saving data in database
+    let sqlQuery = "INSERT INTO books (name, price) VALUES (?,?)"
+    // execute sql query
+    let newRecord = [req.body.name, req.body.price]
+    db.query(sqlQuery, newRecord, (err, result) => {
+        if (err) {
+            next(err)
+        }
+        else {
+            res.send(`This book has been added to database - name: ${req.body.name}, price: £${req.body.price}`)
+        }
+    })
 });
 
 // Export the router object so index.js can access it

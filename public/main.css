@@ -15,29 +15,33 @@ p,li {
 }
 
 a:link {
-    color: orangered;
-    text-decoration: none;
-    padding:5px;
-  }
+  color: orangered;
+  text-decoration: none;
+  padding:5px;
+}
   
-  /* visited link */
-  a:visited {
-    color: tomato;
-    text-decoration: none;
-    padding:5px;
-  }
+/* visited link */
+a:visited {
+  color: tomato;
+  text-decoration: none;
+  padding:5px;
+}
   
-  /* mouse over link */
-  a:hover {
-    color: white;
-    text-decoration: none;
-    background-color: orangered;
-    padding:5px;
-  }
+/* mouse over link */
+a:hover {
+  color: white;
+  text-decoration: none;
+  background-color: orangered;
+  padding:5px;
+}
   
-  /* selected link */
-  a:active {
-    color: blue;
-    text-decoration: none;
-    padding:5px;
-  }
+/* selected link */
+a:active {
+  color: blue;
+  text-decoration: none;
+  padding:5px;
+}
+
+.input {
+  margin: 7.5px;
+}
