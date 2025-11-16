@@ -9,9 +9,8 @@ router.get('/search',function(req, res, next){
 
 router.get('/search-result', function (req, res, next) {
     //searching in the database
-    res.send("You searched for: " + req.query.keyword)
+    res.send("You searched for: " + req.query.search)
 });
-
 
 router.get('/list', function(req, res, next) {
     let sqlQuery = ` SELECT id, price, name FROM books`; // query database to get all the books
