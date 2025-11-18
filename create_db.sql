@@ -6,9 +6,18 @@ USE berties_books;
 
 # Create the tables
 CREATE TABLE IF NOT EXISTS books (
-    id     INT AUTO_INCREMENT,
-    name   VARCHAR(50),
-    price  DECIMAL(5, 2),
+    id INT AUTO_INCREMENT,
+    name VARCHAR(50),
+    price DECIMAL(5, 2),
+    PRIMARY KEY(id));
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT,
+    username VARCHAR(50),
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(50),
+    hashed_password VARCHAR(50),
     PRIMARY KEY(id));
 
 # Create application user
