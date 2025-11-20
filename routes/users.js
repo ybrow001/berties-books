@@ -21,21 +21,59 @@ router.post('/registered', function (req, res, next) {
             next(err);
         }
 
-        const sqlQuery = 'INSERT INTO users (hashed_password) VALUES (?)';
-        const newRecord = [hashedPassword];
+        const sqlQuery = 'INSERT INTO users (first_name, last_name, email, username, hashed_password) VALUES (?,?,?,?,?)';
+        const newRecord = [req.body.first, req.body.last, req.body.email, req.body.username, hashedPassword];
 
         db.query(sqlQuery, newRecord, (err, result) => {
-            if (err) {
+            if(err) {
             next(err)
         } else {
             result = `hello ${req.body.first} ${req.body.last} you are now registered! we will send you an email at ${req.body.email}. 
             your password is: ${req.body.password}, your hashed password is: ${hashedPassword}.`;
-
-            res.send(result);
+            res.send(result)
         }
     });  
     });                                                                
 }); 
+
+router.get('/list', function (req, res, next) {
+    let sqlQuery = `SELECT id, username, first_name, last_name FROM users`; // query database to get all books id, prcices and names
+    // execute sql query
+    db.query(sqlQuery, (err, result) => {
+        if(err) {
+            next(err)
+        }
+        res.render("userlist.ejs", {users: result})
+    });
+});
+
+router.get('/login', function (req, res, next) {
+    res.render('login.ejs')
+});
+
+router.post('/loggedin', function (req, res, next) {
+    let username = req.body.username;
+    let plainPassword = req.body.password;
+    let sqlQuery = 'SELECT hashed_password FROM users WHERE username=?';
+
+    db.query(sqlQuery, [username], (err, rows) => {
+        if(err) {
+            next(err)
+        } else {
+            let userHash = rows[0].hashed_password;
+            
+            bcrypt.compare(plainPassword, userHash, function(err, result) {
+                if(err) {
+                    next(err)
+                } else if(result == true) {
+                    res.send(`hello ${username}, your login was successful!`)
+                } else { // only send incorrect message - is it comparing two hashed passwords?
+                    res.send(`the login credentials entered were incorrect, please try again or make an account on our registration page :)`)
+                }
+            })
+        }
+    });
+});
 
 // export the router object so index.js can access it
 module.exports = router;

@@ -30,7 +30,7 @@ const db = mysql.createPool({
     database: 'berties_books',
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0,
+    queueLimit: 0
 });
 global.db = db;
 
