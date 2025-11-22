@@ -67,7 +67,7 @@ router.post('/loggedin', function (req, res, next) {
                     next(err)
                 } else if(result == true) {
                     res.send(`hello ${username}, your login was successful!`)
-                } else { // only send incorrect message - is it comparing two hashed passwords?
+                } else {
                     res.send(`the login credentials entered were incorrect, please try again or make an account on our registration page :)`)
                 }
             })
